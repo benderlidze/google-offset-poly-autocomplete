@@ -171,19 +171,47 @@
             let diff;
             let main;
 
-            fetch("diff.geojson")
-                .then(i => i.json())
-                .then(json => {
-                    diff = json
-                    map.data.addGeoJson(json);
-                })
+            (async () => {
 
-            fetch("main.geojson")
-                .then(i => i.json())
-                .then(json => {
-                    main = json
-                    map.data.addGeoJson(json);
-                })
+                const diff = await fetch("diff.geojson")
+                const rdiff = await diff.json()
+                map.data.addGeoJson(rdiff);
+
+                const main = await fetch("main.geojson")
+                const rmain = await main.json()
+                map.data.addGeoJson(rmain);
+
+
+                map.data.setStyle(function (feature) {
+                    var CDUID = feature.getProperty('CDUID');
+                    console.log('CDUID', CDUID);
+                    var color = "orange";
+                    if (CDUID === "3506") {
+                        color = "red";
+                    }
+                    return {
+                        fillColor: color,
+                        strokeWeight: 1
+                    }
+                });
+
+            })()
+
+            // fetch("diff.geojson")
+            //     .then(i => i.json())
+            //     .then(json => {
+            //         diff = json
+            //         map.data.addGeoJson(json);
+            //     })
+
+            // fetch("main.geojson")
+            //     .then(i => i.json())
+            //     .then(json => {
+            //         main = json
+            //         map.data.addGeoJson(json);
+
+
+            //     })
 
 
         }
