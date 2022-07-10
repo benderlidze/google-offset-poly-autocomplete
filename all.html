@@ -3,7 +3,7 @@
 <head>
     <title>Place Autocomplete</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <style>
         /**
  * @license
@@ -114,15 +114,35 @@
 
     <script>
 
-        const files = [
+
+        const myURLObj = new URL(document.URL);
+        const county = myURLObj.searchParams.get('county')
+
+        const files = county ? [county] : [
+            'Ajax',
+            'Barrie',
             'Brampton',
+            'Brantford',
+            'Burlington',
+            'Cambridge',
+            'Greater Sudbury',
+            'Guelph',
             'Hamilton',
+            'Kingston',
             'Kitchener',
             'London',
             'Markham',
+            'Milton',
             'Mississauga',
+            'Oakville',
+            'Oshawa',
+            'Ottawa',
+            'Pickering',
             'Richmond Hill',
+            'St. Catharines',
             'Vaughan',
+            'Waterloo',
+            'Whitby',
             'Windsor',
         ]
 
@@ -181,31 +201,6 @@
             let diff;
             let main;
 
-            // (async () => {
-
-            //     const diff = await fetch("diff.geojson")
-            //     const rdiff = await diff.json()
-            //     map.data.addGeoJson(rdiff);
-
-            //     const main = await fetch("main.geojson")
-            //     const rmain = await main.json()
-            //     map.data.addGeoJson(rmain);
-
-            //     map.data.setStyle(function (feature) {
-            //         var CDUID = feature.getProperty('CDUID');
-            //         console.log('CDUID', CDUID);
-            //         var color = "orange";
-            //         if (CDUID === "3506") {
-            //             color = "red";
-            //         }
-            //         return {
-            //             fillColor: color,
-            //             strokeWeight: 1
-            //         }
-            //     });
-
-            // })()
-
 
             files.forEach(async (file) => {
                 console.log('file', file);
@@ -220,6 +215,15 @@
                 rmain.features[0].properties.color = 'red'
                 map.data.addGeoJson(rmain);
 
+                if (files.length === 1) {
+
+                    var center = turf.centerOfMass(rmain)
+                    console.log('center', center);
+                    const c = center.geometry.coordinates;
+                    console.log('c', c);
+                    map.setCenter({ lat: +c[1], lng: +c[0] })
+                }
+
             })
 
             map.data.setStyle(function (feature) {
@@ -230,6 +234,8 @@
                     strokeWeight: 1
                 }
             });
+
+
 
             // fetch("diff.geojson")
             //     .then(i => i.json())
