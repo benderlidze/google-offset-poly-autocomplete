@@ -133,7 +133,7 @@
             'Kitchener',
             'London',
             'Markham',
-            'Milton',
+            'Milton????',
             'Mississauga',
             'Oakville',
             'Oshawa',
@@ -145,6 +145,10 @@
             'Waterloo',
             'Whitby',
             'Windsor',
+
+            'Oshawa',
+            'Whitby',
+            'Whitchurch-Stouffville',
         ]
 
         function initMap() {
@@ -155,7 +159,7 @@
             });
 
             var measureTool = new MeasureTool(map);
-            
+
             const input = document.getElementById("pac-input");
             const autocomplete = new google.maps.places.Autocomplete(input);
             // Bind the map's bounds (viewport) property to the autocomplete object,
@@ -212,7 +216,7 @@
                 const diff = await fetch(url + "_.geojson")
                 const rdiff = await diff.json()
                 rdiff.features[0].properties.color = 'blue'
-                map.data.addGeoJson(rdiff);
+                const d = map.data.addGeoJson(rdiff);
 
                 const main = await fetch(url + "_d.geojson")
                 const rmain = await main.json()
