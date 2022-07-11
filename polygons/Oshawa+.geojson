@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Oshawa",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32735" } },
+"features": [
+{ "type": "Feature", "properties": { "CMAUID": "532", "CMAPUID": "35532", "CMANAME": "Oshawa", "CMATYPE": "B", "PRUID": "35", "PRNAME": "Ontario" }, "geometry": null }
+]
+}
