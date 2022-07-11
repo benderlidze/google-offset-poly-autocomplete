@@ -4,6 +4,7 @@
     <title>Place Autocomplete</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <script src="https://unpkg.com/measuretool-googlemaps-v3"></script>
     <style>
         /**
         * @license
@@ -132,7 +133,7 @@
             'Kitchener',
             'London',
             'Markham',
-            'Milton????',
+            'Milton',
             'Mississauga',
             'Oakville',
             'Oshawa',
@@ -152,6 +153,9 @@
                 zoom: 8,
                 mapTypeControl: false,
             });
+
+            var measureTool = new MeasureTool(map);
+            
             const input = document.getElementById("pac-input");
             const autocomplete = new google.maps.places.Autocomplete(input);
             // Bind the map's bounds (viewport) property to the autocomplete object,
