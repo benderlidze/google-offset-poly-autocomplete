@@ -158,6 +158,7 @@
             'Brantford',
 
             //green
+            'Toronto',
             'Burlington',
             'Whitby',
             'Oshawa',
@@ -225,10 +226,13 @@
                 const diff = await fetch(url + "_.geojson")
                 const rdiff = await diff.json()
 
-                const GREEN = ['Burlington',
+                const GREEN = [
+                    'Toronto',
+                    'Burlington',
                     'Whitby',
                     'Oshawa',
-                    'Whitchurch-Stouffville']
+                    'Whitchurch-Stouffville'
+                ]
 
                 const color = GREEN.includes(file) ? 'green' : 'blue'
 
