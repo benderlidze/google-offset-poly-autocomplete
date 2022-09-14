@@ -100,8 +100,8 @@
         .checkboxes {
             position: absolute;
             z-index: 10;
-            top: 55px;
-            left: 10px;
+            top: 20px;
+            left: 20px;
             background-color: white;
             padding: 10px;
 
@@ -158,7 +158,7 @@
             'Brantford',
 
             //green
-            'Toronto_trim',
+            'Toronto_big',
             'Whitby',
             'Oshawa',
             'Whitchurch-Stouffville',
@@ -168,7 +168,7 @@
             map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: 42.24307564695486, lng: -81.71484341302418 },
                 zoom: 8,
-                mapTypeControl: true,
+                mapTypeControl: false,
             });
             const input = document.getElementById("pac-input");
             const autocomplete = new google.maps.places.Autocomplete(input);
@@ -221,14 +221,14 @@
 
 
             files.forEach(async (file) => {
-                const url = `polygons/${file}`
+                const url = `polygons_v2/${file}`
                 const diff = await fetch(url + "_.geojson")
                 const rdiff = await diff.json()
 
                 const GREEN = [
-                    'Toronto_trim',
-                    'Whitby',
                     'Oshawa',
+                    'Whitby',
+                    'Burlington',
                     'Whitchurch-Stouffville'
                 ]
 
@@ -285,38 +285,6 @@
             });
 
         })
-
-        // green.addEventListener("input", e => {
-        //     const checked = e.target.checked
-        //     map.data.setStyle(function (feature) {
-        //         const color = feature.getProperty('color');
-        //         let fillOpacity = 0;
-        //         if (color === 'green' && checked) {
-        //             fillOpacity = 0.4
-        //         }
-        //         return {
-        //             fillOpacity,
-        //             fillColor: color,
-        //             strokeWeight: 0
-        //         }
-        //     });
-        // })
-
-        // blue.addEventListener("input", e => {
-        //     const checked = e.target.checked
-        //     map.data.setStyle(function (feature) {
-        //         const color = feature.getProperty('color');
-        //         let fillOpacity = 0;
-        //         if (color === 'blue' && checked) {
-        //             fillOpacity = 0.4
-        //         }
-        //         return {
-        //             fillOpacity,
-        //             fillColor: color,
-        //             strokeWeight: 0
-        //         }
-        //     });
-        // })
 
         window.initMap = initMap;
 
