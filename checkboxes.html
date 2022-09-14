@@ -124,9 +124,9 @@
 
     <div class="checkboxes">
         <input id="pac-input" type="text" placeholder="Enter a location" />
-        <div><label for="green"><input type="checkbox" id="green" checked> Tier 1</label></div>
-        <div><label for="blue"><input type="checkbox" id="blue" checked> Tier 2</label></div>
-        <div><label for="red"><input type="checkbox" id="red" checked> Tier 3</label></div>
+        <div><label for="green"><input type="checkbox" id="green"> Tier 1</label></div>
+        <div><label for="blue"><input type="checkbox" id="blue"> Tier 2</label></div>
+        <div><label for="red"><input type="checkbox" id="red"> Tier 3</label></div>
     </div>
     <script>
 
@@ -253,7 +253,7 @@
             map.data.setStyle(function (feature) {
                 var color = feature.getProperty('color');
                 return {
-                    fillOpacity: 0.4,
+                    fillOpacity: 0,
                     fillColor: color,
                     strokeWeight: 0
                 }
