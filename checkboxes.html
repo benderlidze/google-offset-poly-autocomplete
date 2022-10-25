@@ -158,7 +158,7 @@
             'Brantford',
 
             //green
-            'Toronto_trim',
+            'Toronto_Ottawa_union',
             'Whitby',
             'Oshawa',
             'Whitchurch-Stouffville',
@@ -226,13 +226,14 @@
                 const rdiff = await diff.json()
 
                 const GREEN = [
-                    'Toronto_trim',
+                    'Toronto_Ottawa_union',
                     'Whitby',
                     'Oshawa',
                     'Whitchurch-Stouffville'
                 ]
 
                 const color = GREEN.includes(file) ? 'green' : 'blue'
+                console.log('color', color);
 
                 rdiff.features[0].properties.color = color
                 map.data.addGeoJson(rdiff);
