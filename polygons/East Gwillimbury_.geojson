@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "East Gwillimbury",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1 }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -79.509537595583822, 44.063410575806017 ], [ -79.410665912921885, 44.086072802950873 ], [ -79.43084726838805, 44.162524159238885 ], [ -79.529549359827556, 44.140499760966897 ], [ -79.509537595583822, 44.063410575806017 ] ] ] ] } }
+]
+}
