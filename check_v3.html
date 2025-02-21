@@ -129,9 +129,9 @@
     <script>
 
         function initMap() {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 42.24307564695486, lng: -81.71484341302418 },
-                zoom: 8,
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {lat: 44.396816990662465, lng: -79.4276239254448},
+                zoom: 7,
                 mapTypeControl: true,
             });
 
@@ -215,7 +215,7 @@
             // Add checkbox event listeners
             checkboxes.forEach(item => {
                 const checkbox = document.getElementById(item.color);
-                checkbox.addEventListener('change', function() {
+                checkbox.addEventListener('change', function () {
                     if (this.checked) {
                         if (geoJsonData[item.file]) {
                             const features = map.data.addGeoJson(geoJsonData[item.file]);
