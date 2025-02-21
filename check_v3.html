@@ -124,22 +124,23 @@
 
     <div class="checkboxes">
         <input id="pac-input" type="text" placeholder="Enter a location" />
-        <div><label for="green"><input type="checkbox" id="green"> Tier 1</label></div>
-        <div><label for="blue"><input type="checkbox" id="blue"> Tier 2</label></div>
-        <div><label for="red"><input type="checkbox" id="red"> Tier 3</label></div>
+        <div id="checkbox-container"></div>
     </div>
     <script>
 
-        const green = document.getElementById("green")
-        const blue = document.getElementById("blue")
-        const red = document.getElementById("red")
-
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
+            const map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: 42.24307564695486, lng: -81.71484341302418 },
                 zoom: 8,
                 mapTypeControl: true,
             });
+
+            // Add marker for place search
+            const marker = new google.maps.Marker({
+                map,
+                anchorPoint: new google.maps.Point(0, -29),
+            });
+
             const input = document.getElementById("pac-input");
             const autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo("bounds", map);
@@ -172,20 +173,71 @@
             });
 
             const checkboxes = [
-                { name: "Davis", file: "davis.json", color: 'red' },
-                { name: "Massimo", file: "massimo.json", color: 'green' },
-                { name: "Rose", file: "rose.json", color: 'blue' }
-            ]
+                { name: "Davis", file: "geojson/davis.json", color: 'red' },
+                { name: "Massimo", file: "geojson/massimo.json", color: 'green' },
+                { name: "Rose", file: "geojson/rose.json", color: 'blue' }
+            ];
+
+            // Build checkboxes dynamically
+            const container = document.getElementById('checkbox-container');
+            checkboxes.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `<label for="${item.color}">
+                    <input type="checkbox" id="${item.color}"> ${item.name}
+                </label>`;
+                container.appendChild(div);
+            });
+
+            const geoJsonData = {};   // file -> GeoJSON object
+            const addedFeatures = {}; // file -> added features
+
+            // Preload all GeoJSON files
+            checkboxes.forEach(item => {
+                fetch(item.file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Add color property to each feature
+                        data.features.forEach(feature => {
+                            feature.properties = feature.properties || {};
+                            feature.properties.color = item.color;
+                        });
+                        geoJsonData[item.file] = data;
+                    })
+                    .catch(err => console.error(`Error loading ${item.file}:`, err));
+                addedFeatures[item.file] = [];
+            });
+
+            // Add checkbox event listeners
+            checkboxes.forEach(item => {
+                const checkbox = document.getElementById(item.color);
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        if (geoJsonData[item.file]) {
+                            const features = map.data.addGeoJson(geoJsonData[item.file]);
+                            addedFeatures[item.file] = features;
+                        }
+                    } else {
+                        addedFeatures[item.file].forEach(feature => map.data.remove(feature));
+                        addedFeatures[item.file] = [];
+                    }
+                });
+            });
 
             map.data.setStyle(function (feature) {
                 var color = feature.getProperty('color');
                 return {
-                    fillOpacity: 0,
                     fillColor: color,
-                    strokeWeight: 0
-                }
+                    fillOpacity: 0.2,
+                    strokeColor: color,
+                    strokeWeight: 2,
+                    strokeOpacity: 1
+                };
             });
-
         }
 
         window.initMap = initMap;
